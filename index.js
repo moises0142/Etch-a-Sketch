@@ -1,55 +1,78 @@
-body= document.querySelector("body");
+let body= document.querySelector("body");
 
-askUserButton = document.createElement("button")
-askUserButton.textContent="Click to change grid layout."
+let askUserButton = document.createElement("button")
+askUserButton.textContent="Click to change grid layout.";
 askUserButton.classList.add("button1");
 body.appendChild(askUserButton);
 
-squares256= document.createElement("div")
-body.appendChild(squares256);
-squares256.className="containerOf256Div";
+squaresContainer= document.createElement("div")
+body.appendChild(squaresContainer);
+squaresContainer.className="containerOfDiv";
 
 
 
-const arrayOf256Square = [];
-for(let i = 0; i<256; i++){
-    arrayOf256Square.push(i);
+let size=16;
+let rowOfSquares=[]
+
+fillRow(size);
+
+function fillRow(fillSize){
+    rowOfSquares=[];
+    for(let i = 0; i<fillSize; i++){
+
+        rowOfSquares.push(i);
+    }
 }
 
-arrayOf256Square.forEach(function(el){
-    let div = document.createElement("div");
-    div.className= ("div "+el);
-    div.setAttribute("id","modificationsToSquares");
-    div.innerHTML= ""; 
-    squares256.appendChild(div);
+rowOfSquares.forEach(createAllTheDivForRow)
 
-});
+function createAllTheDivForRow(el){
+    let i = 0;
+    while(i<size){
+        let rowDiv = document.createElement("div");
+        rowDiv.className=("rowDiv"+el);
+        rowDiv.classList.toggle("rowDivStyle");
+        rowDiv.setAttribute("id", "modificationsToSquares");
+        squaresContainer.appendChild(rowDiv);
+        i++;
+    }
+}
+
+
 
 let divModifications = document.querySelectorAll("#modificationsToSquares");
 
-divModifications.forEach((div) =>{
-    div.addEventListener("mouseover", ()=>{
-        div.style.background = "blue";
+divModifications.forEach(addColorToDiv);
+
+function addColorToDiv(el){
+    el.style.width = 100 * (1/size)+"%";
+
+    el.addEventListener("mouseover", ()=>{
+        function randomRgb() {
+            return 'rgb(' + (Math.random() * 360)+','+(Math.random() * 360)
+            +','+(Math.random() * 360) + ')';
+        }
+        el.style.backgroundColor  =  randomRgb();
     });
-});
+}
+
+
 
 askUserButton.addEventListener("click", () =>{
 
-    body.removeChild(squares256);
-    let userInput = prompt("enter one number you would like the number of\
+    while (squaresContainer.hasChildNodes()) {
+        squaresContainer.removeChild(squaresContainer.firstChild);
+      }
+    size = prompt("enter one number you would like the number of\
     rows and columns to be.");
-    if(userInput < 100 ){}
-    let newGridLayoutNumber = [] ;
-
-    arrayOf256Square.forEach(function(el){
-        let div = document.createElement("div");
-        div.className= ("div "+el);
-        div.setAttribute("id","modificationsToSquares");
-        div.innerHTML= ""; 
-        squares256.appendChild(div);
-    
-    });
-
+    if(size < 100){
+        fillRow(size);
+        rowOfSquares.forEach(createAllTheDivForRow)
+        console.log(rowOfSquares)
+        let divModifications = document.querySelectorAll("#modificationsToSquares");
+        divModifications.forEach(addColorToDiv);
+        
+    }
 
 
 });

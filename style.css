@@ -1,19 +1,19 @@
-.containerOf256Div{
-    display: flex;
-    flex-wrap:wrap;
+.containerOfDiv{
 
     max-width: 50%;
     max-height: 50%;
-
     margin:25%;
     margin-top:0;
+}
+.rowDivStyle{
+    display:inline-block;
+    height: 20px;
 }
 
 
 #modificationsToSquares{
     outline: 2px solid rgb(0, 0, 0);
-    height: 20px;
-    width: calc(1% * 100/16);
+    
 }
 
 
